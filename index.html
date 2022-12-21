@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.0.1/mdb.min.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body class="bg-primary">
+    <div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
+        <div class="card">
+            <div class="card-header text-center">
+                <h4 class="mb-0 text-danger"><strong>Rohit, You have left with only</strong></h4>
+            </div>
+            <div class="card-body">
+                <div class="text-center">
+                    <h4 id="now" class='mb-4 text-success'>{{This.time}}</h4>
+                    <h4>Days</h4>
+                    <h2 class="display-2 fw-bold" id="days"></h2>
+                    <br>
+                    <h3>Hours</h3>
+                    <h1 class="display-1 fw-bold" id="hours"></h1>
+                    <br>
+                    <h4>Minutes</h4>
+                    <h2 class="display-3 fw-bold" id="minutes"></h2>
+                    <br>
+                    <h4>Seconds</h4>
+                    <h2 class="display-4 fw-bold" id="seconds"></h2>
+                    <hr>
+                    <p id="demo" style="font-size:42px"></p>
+                    <p class="text-danger mb-0">Time is decreasing, hurry up</p>
+                </div>
+            </div>
+            <div class="card-footer text-center">
+                <h4><strong>Ending... 26 August 2025</strong></h4>
+            </div>
+        </div>
+    </div>
+
+    <!-- Display the countdown timer in an element -->
+
+
+    <script>
+        // Set the date we're counting down to
+        var countDownDate = new Date("Aug 26, 2025 23:59:59").getTime();
+
+        // Update the count down every 1 second
+        var x = setInterval(function() {
+
+            // Get today's date and time
+            var now = new Date().getTime();
+
+            // Find the distance between now and the count down date
+            var distance = countDownDate - now;
+
+            // Time calculations for days, hours, minutes and seconds
+            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Display the result in the element with id="demo"
+
+            total_hours = days * 24 + (hours) + (60 / minutes);
+            total_minutes = days * 60 * 24 + (hours * 60) + minutes;
+            total_seconds = (total_minutes * 60) + seconds;
+            document.getElementById("days").innerHTML = formatter.format(days)
+            document.getElementById("hours").innerHTML = formatter.format(total_hours)
+            document.getElementById("minutes").innerHTML = formatter.format(total_minutes)
+            document.getElementById("seconds").innerHTML = formatter.format(total_seconds)
+
+            document.getElementById("demo").innerHTML = days + "d " + hours + "h " +
+                minutes + "m " + seconds + "s ";
+
+            // If the count down is finished, write some text
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("demo").innerHTML = "EXPIRED";
+            }
+        }, 1000);
+
+        const monthNames = ["January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ];
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+
+        today = dd +' '+ monthNames[mm-1] +', ' + yyyy;
+        document.getElementById("now").innerHTML = today
+
+        // Create our number formatter.
+        const formatter = new Intl.NumberFormat('en-US', {
+            maximumFractionDigits: 2
+            // These options are needed to round to whole numbers if that's what you want.
+            //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
+            //maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
+        });
+    </script>
+</body>
+
+</html>
